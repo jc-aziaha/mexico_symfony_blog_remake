@@ -68,11 +68,24 @@
                             <label for="inputPassword">Password</label>
                             <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                         </div>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-md-6 my-1">
+                                    <label>
+                                        <input type="checkbox" name="_remember_me" checked>
+                                        Se souvenir de moi
+                                    </label>
+                                </div>
+                                <div class="col-md-6 text-lg-end my-1">
+                                    <a href="">Mot de passe oublié?</a>
+                                </div>
+                            </div>
+                        </div>
 
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                         <div>
-                            <input formnovalidate type="submit" class="btn btn-primary shadow" value="Se connecter">
+                            <input formnovalidate type="submit" class="w-100 btn btn-primary shadow" value="Se connecter">
                         </div>
                     </form>
 
