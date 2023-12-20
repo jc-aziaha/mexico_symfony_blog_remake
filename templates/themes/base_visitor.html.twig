@@ -64,6 +64,18 @@
 					</ul>
                     <ul class="navbar-nav ms-auto">
 						{% if app.user %}
+							{% if is_granted('ROLE_ADMIN') %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('admin_home_index')}}">Espace admin</a>
+								</li>
+							{% endif %}
+
+							{% if is_granted('ROLE_USER') %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{path('user_home_index')}}">Espace user</a>
+								</li>
+							{% endif %}
+							
 							<li class="nav-item">
 								<a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
 							</li>
