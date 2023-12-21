@@ -1,0 +1,77 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Liste des articles{% endblock %}
+
+{% block description %}Liste des articles{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des articles</h1>
+
+    <div class="d-flex justify-content-end align-items-center my-3">
+        <a href="{{path('admin_post_create')}}" class="btn btn-primary shadow"><i class="fas fa-plus"></i> Nouvel article</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Catégorie</th>
+                    <th>Publié?</th>
+                    <th>Contenu</th>
+                    <th>Créé le</th>
+                    <th>Modifié le</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{post.id}}</td>
+                        <td>
+                            {% if post.image %}
+                                <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('admin_post_thumb') }}" alt="{{ post.title }}">
+                            {% endif %}
+                            
+                        </td>
+                        <td>{{post.title}}</td>
+                        <td>{{post.description}}</td>
+                        <td>{{post.category.name}}</td>
+                        <td>
+                            {% if post.isPublished %}
+                                <p>Publié le {{ post.publishedAt|format_date() }}</p>
+                            {% else %}
+                                <p>Pas encore</p>
+                            {% endif %}
+                            
+                            <form method="POST" action="{{path('admin_post_publish', {'id':post.id})}}" class="d-flex justify-content-center align-items-center">
+                                <div class="form-check form-switch">
+                                    <input type="hidden" name="csrf_token" value="{{csrf_token('publish_post_'~post.id)}}">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <input {{ post.isPublished ? 'checked' : '' }}  onclick="return confirm('Confirmer cette action?');" onchange="this.form.submit()" class="form-check-input" type="checkbox" role="switch" id="switch_{{post.id}}">
+                                    <label class="form-check-label" for="switch_{{post.id}}"></label>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="{{path('admin_post_show', {'id':post.id})}}" class="text-dark" title="Lire cet article"><i class="fa-solid fa-eye"></i></a>
+                        </td>
+                        <td>{{post.createdAt|format_datetime()}}</td>
+                        <td>{{post.updatedAt|format_datetime()}}</td>
+                        <td>
+                            <a class="mx-2 text-secondary" href="{{path('admin_post_edit', {'id':post.id})}}"><i class="fas fa-edit"></i></a>
+                            <a onclick="event.preventDefault(); return confirm('Confirmer la suppression?') && document.querySelector('#delete_post_{{post.id}}_form').submit();" class="mx-2 text-danger" href=""><i class="fa-solid fa-trash"></i></a>
+                            <form id="delete_post_{{post.id}}_form" method="POST" action="{{path('admin_post_delete', {'id':post.id})}}">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="csrf_token" value="{{csrf_token('delete_post_'~post.id)}}">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
