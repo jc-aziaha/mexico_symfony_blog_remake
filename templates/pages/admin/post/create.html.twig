@@ -1,0 +1,61 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Nouvel article{% endblock %}
+
+{% block description %}Nouvel article{% endblock %}
+
+{# The text editor #}
+{% block tinyMCE %}
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea#post_form_content'
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Nouvel article</h1>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-10 mx-auto">
+                {{form_start(form)}}
+                    <div class="mb-3">
+                        <label for="post_form_title">Titre</label>
+                        <div class="text-danger">{{form_errors(form.title)}}</div>
+                        {{form_widget(form.title, {"attr": {"class": "form-control", "autofocus":"autofocus"}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_form_category">Catégorie</label>
+                        <div class="text-danger">{{form_errors(form.category)}}</div>
+                        {{form_widget(form.category, {"attr": {"class": "form-control"}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_form_description">Description</label>
+                        <div class="text-danger">{{form_errors(form.description)}}</div>
+                        {{form_widget(form.description, {"attr": {"class": "form-control"}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_form_keywords">Des mots clés?</label>
+                        <div class="text-danger">{{form_errors(form.keywords)}}</div>
+                        {{form_widget(form.keywords, {"attr": {"class": "form-control"}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_form_imageFile_file">Image</label>
+                        <div class="text-danger">{{form_errors(form.imageFile)}}</div>
+                        {{form_widget(form.imageFile, {"attr": {"class": "form-control"}})}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="post_form_content">Contenu</label>
+                        <div class="text-danger">{{form_errors(form.content)}}</div>
+                        {{form_widget(form.content, {"attr": {"class": "form-control", "rows":"10"}})}}
+                    </div>
+                    <div>
+                        <input formnovalidate type="submit" class="btn btn-primary shadow" value="Sauvegarder">
+                    </div>
+                {{form_end(form)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
