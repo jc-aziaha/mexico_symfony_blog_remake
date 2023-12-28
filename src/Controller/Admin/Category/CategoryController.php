@@ -27,6 +27,8 @@ class CategoryController extends AbstractController
     #[Route('/admin/category/create', name: 'admin_category_create', methods:['GET', 'POST'])]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
+
+
         $category = new Category();
 
         $form = $this->createForm(CategoryFormType::class, $category);
@@ -82,7 +84,7 @@ class CategoryController extends AbstractController
             $em->remove($category);
             $em->flush();
 
-            $this->addFlash('success', "La catégorie a été supprimée.");
+            $this->addFlash('success', "Cette catégorie ainsi que tous ses articles associés ont été supprimés.");
         }
         
         return $this->redirectToRoute('admin_category_index');

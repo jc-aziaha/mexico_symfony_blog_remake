@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Post;
 
 use App\Entity\Post;
 use App\Form\PostFormType;
+use App\Repository\CategoryRepository;
 use App\Repository\PostRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,8 +26,15 @@ class PostController extends AbstractController
     }
     
     #[Route('/admin/post/create', name: 'admin_post_create', methods:['GET', 'POST'])]
-    public function create(Request $request, EntityManagerInterface $em): Response
+    public function create(Request $request, EntityManagerInterface $em, CategoryRepository $categoryRepository): Response
     {
+
+        if ( count($categoryRepository->findAll()) <= 0 ) 
+        {
+            $this->addFlash('warning', "Veuillez créer au moins une catégorie avant de rédiger des articles.");
+            return $this->redirectToRoute("admin_category_index");
+        }
+
         $post = new Post();
 
         $form = $this->createForm(PostFormType::class, $post);
