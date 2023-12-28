@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Tag;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Category;
@@ -23,6 +24,12 @@ class PostFormType extends AbstractType
                 'class' => Category::class,
                 'choice_label' => 'name',
                 'placeholder'  => 'Choisissez la catégorie' 
+            ])
+            ->add('tags', EntityType::class, [
+                'class' => Tag::class,
+                'choice_label' => 'name',
+                'expanded' => false,
+                'multiple' => true
             ])
             ->add('description', TextType::class)
             ->add('keywords', TextType::class)
