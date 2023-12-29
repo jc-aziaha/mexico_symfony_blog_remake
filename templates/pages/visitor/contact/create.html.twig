@@ -1,0 +1,71 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}Contact{% endblock %}
+
+{% block description %}Contactez-moi{% endblock %}
+
+{% block main %}
+    <main>
+
+        {# Header component #}
+        {% include 'components/visitor/header.html.twig' with {'h1': "Contactez-moi"} %}
+
+
+        <div class="container my-5">
+            <div class="row">
+                <div class="col-lg-6">
+
+                    {% include 'components/alert.html.twig' %}
+                    
+                    {{form_start(form)}}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+
+
+                                <label for="contact_form_firstName">Prénom <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(form.firstName)}}</div>
+                                {{form_widget(form.firstName, {'attr': {'class':'form-control', 'autofocus':'autofocus'}})}}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contact_form_lastName">Nom <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(form.lastName)}}</div>
+                                {{form_widget(form.lastName, {'attr': {'class':'form-control'}})}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="contact_form_email">Email <span class="text-danger">*</span></label>
+                                <div class="text-danger">{{form_errors(form.email)}}</div>
+                                {{form_widget(form.email, {'attr': {'class':'form-control'}})}}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contact_form_phone">Téléphone</label>
+                                <div class="text-danger">{{form_errors(form.phone)}}</div>
+                                {{form_widget(form.phone, {'attr': {'class':'form-control'}})}}
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contact_form_message">Message <span class="text-danger">*</span></label>
+                            <div class="text-danger">{{form_errors(form.message)}}</div>
+                            {{form_widget(form.message, {'attr': {'class':'form-control', 'rows':'6'}})}}
+                        </div>
+                        <div>
+                            <input formnovalidate type="submit" class="btn btn-primary shadow">
+                        </div>
+                    {{form_end(form)}}
+                </div>
+                <div class="col-lg-6 d-flex flex-column justify-content-center align-items-center my-5">
+                    <div class="text-center text-md-start jd-contact-center">
+                        <p><i class="fa-solid fa-envelope"></i> : medecine-du-monde@gmail.com</p>
+                        <p><i class="fa-solid fa-phone"></i> : 06 05 05 05 05</p>
+                    </div>
+                    <div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.5186120307235!2d2.7810180754256177!3d48.86738930007461!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61d19ca7ae2bd%3A0x57faf8cb6310e660!2sDisneyland%20Paris!5e0!3m2!1sfr!2sfr!4v1703856442438!5m2!1sfr!2sfr" class="w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        {# <iframe src="https://www.google.com/maps/d/embed?mid=1HNANYSFGYgOX-VwD1xZJhf4PWng&hl=en_US&ehbc=2E312F" class="w-100 h-100"></iframe> #}
+                        {# <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d10498.075182420007!2d2.783593!3d48.8673858!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e61d19ca7ae2bd%3A0x57faf8cb6310e660!2sDisneyland%20Paris!5e0!3m2!1sfr!2sfr!4v1692866039763!5m2!1sfr!2sfr" class="w-100 h-100" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> #}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
