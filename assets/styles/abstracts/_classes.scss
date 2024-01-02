@@ -2,3 +2,35 @@
 {
     color: $jd_danger !important;
 }
+
+.jd-img-container
+{
+    width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media screen and (min-width:768px) 
+    {
+        &
+        {
+            width: 60%;
+            height: auto;
+        }
+    }
+}
+
+.jd-post-container
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media screen and (min-width:768px) 
+    {
+        &
+        {
+            width: 50%;
+        }
+    }
+}
