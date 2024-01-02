@@ -9,8 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
-
-
+use Symfony\Config\Framework\UidConfig;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[UniqueEntity('name', message:"Cette catégorie existe déjà.")]
@@ -92,6 +91,27 @@ class Category
     public function getPosts(): Collection
     {
         return $this->posts;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPublishedPosts(): array
+    {
+
+        $posts = $this->posts->toArray();
+
+        $postsPublished = [];
+
+        foreach ($posts as $post) 
+        {
+            if ( $post->isIsPublished() ) 
+            {
+                $postsPublished[] = $post;
+            }
+        }
+
+        return $postsPublished;
     }
 
     public function addPost(Post $post): static
