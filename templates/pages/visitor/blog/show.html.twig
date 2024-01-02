@@ -1,0 +1,75 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}{{post.title}}{% endblock %}
+
+{% block description %}{{post.description}}{% endblock %}
+
+{% block main %}
+    <main>
+        <div class="container mt-5">
+            <div class="text-center jd-img-container">
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{path('visitor_blog_index')}}">Liste des articles</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{post.description|u.truncate('90', '...')}}</li>
+                    </ol>
+                </nav>
+
+                {% if post.image %}
+                    <img src="{{ vich_uploader_asset(post, 'imageFile') }}" class="w-100 h-100" alt="{{ post.title }}">
+                {% endif %}
+                <h1 class="my-3 display-5">{{post.title}}</h1>
+                <small>{{post.publishedAt|ago}} par <strong>Jean Dupont</strong></small>
+            </div>
+            
+            <div class="jd-post-container my-5">
+                {{post.content|raw}}
+
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{path('visitor_blog_index')}}">Liste des articles</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{post.description|u.truncate('90', '...')}}</li>
+                    </ol>
+                </nav>
+
+                {% if app.user %}
+                    <div class="my-5" id="comment-div">
+                        {{form_start(form, {'action': path('visitor_blog_post_show', {'id':post.id, 'slug':post.slug})~"#comment-div" })}}
+                            <div class="mb-3">
+                                <label>Votre commentaire</label>
+                                <div class="text-danger">{{form_errors(form.content)}}</div>
+                                {{form_widget(form.content, {'attr': {'class':'form-control'}})}}
+                            </div>
+                            <div>
+                                <input type="submit" value="Commenter" class="btn btn-primary">
+                            </div>
+                        {{form_end(form)}}
+                    </div>
+                {% else %}
+                    <p class="text-center my-5"><strong>Veuillez vous <a href="{{path('visitor_authentication_login')}}" class="btn btn-outline-primary">connecter</a> ou vous <a href="{{path('visitor_registration_register')}}" class="btn btn-primary">inscrire</a> avant de laisser un commentaire.</strong></p>
+                {% endif %}
+                
+
+                <div class="my-5">
+                    {% if post.comments|length > 0 %}
+                        {% for comment in post.comments|reverse %}
+                            {% if comment.isEnable %}
+                                <div class="shadow bg-white p-3">
+                                    <p><strong>{{comment.user.firstName}} {{comment.user.lastName}}</strong></p>
+                                    <p>{{comment.content}}</p>
+                                </div>
+                                <hr class="my-3">
+                            {% endif %}
+                            
+                        {% endfor %}
+                    {% endif %}
+                    
+                </div>
+
+
+            </div>
+
+        </div>
+    </main>
+{% endblock %}
