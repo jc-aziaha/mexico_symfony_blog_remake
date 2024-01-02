@@ -6,6 +6,92 @@
 
 {% block main %}
     <main>
-        <h1>Accueil</h1>
+        <header>
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-md-6 col-lg-5 order-md-2">
+                        <img src="{{asset('images/visitor/welcome/hero/hero.png')}}" class="img-fluid" >
+                    </div>
+                    <div class="col-md-6 col-lg-7 order-md-1 mt-5 d-flex flex-column justify-content-evenly align-items-center">
+                        <div>
+                            <h1>
+                                Bienvenue sur mon blog
+                            </h1>
+                        </div>
+                        <div>
+                            <p>
+                                Je m'appelle Jean Dupont.
+                            </p>
+                            <p>
+                                Permettez-moi de vous faire découvrir les clés d'une vie saine et épanouissante.    
+                            </p>
+                        </div>
+                        <div>
+                            <a href="{{path('visitor_blog_index')}}" class="btn btn-lg btn-primary">Liste des articles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="about-me-section">
+            <h1 class="text-center my-3 display-5">Qui suis-je ?</h1>
+
+            <div class="container my-5">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="{{asset('images/visitor/welcome/about_me/about_me.png')}}" class="img-fluid">
+                    </div>
+                    <div class="col-md-6 d-flex flex-column justify-content-evenly align-items-center">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit nesciunt rerum ab consequuntur laborum dignissimos quidem delectus! Nihil quasi ab enim voluptates quae, laboriosam blanditiis sequi saepe, debitis consectetur a inventore. Odit id quidem nihil dicta eius veritatis.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit nesciunt rerum ab consequuntur laborum dignissimos quidem delectus! Nihil quasi ab enim voluptates quae, laboriosam blanditiis sequi saepe, debitis consectetur a inventore. Odit id quidem nihil dicta eius veritatis.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati impedit nesciunt rerum ab consequuntur laborum dignissimos quidem delectus! Nihil quasi ab enim voluptates quae, laboriosam blanditiis sequi saepe, debitis consectetur a inventore. Odit id quidem nihil dicta eius veritatis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {% if posts is not empty %}
+        <section id="last-posts">
+            <h1 class="text-center my-3 display-5">Mes derniers articles</h1>
+
+            <div class="container mt-5">
+                <div class="row">
+                    {% for post in posts %}
+                        <div class="col-md-4">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-text">{{post.description}}</p>
+                                    <p>
+                                        <small>Publié {{post.publishedAt|ago}}</small>
+                                    </p>
+                                    <p>
+                                        <a href="#" class="btn btn-primary">Lire cet article</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+
+        <section class="my-3 py-5 bg-light text-center">
+            <a 
+                href="{{path('visitor_contact_create')}}" 
+                class="btn btn-lg btn-primary">
+                    Contactez-moi
+            </a>
+        </section>
+        
     </main>
 {% endblock %}

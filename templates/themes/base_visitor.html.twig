@@ -1,3 +1,4 @@
+{% set clientUri = app.request.pathInfo %}
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
@@ -49,7 +50,7 @@
 	<body>
 
 		{# La barre de navigation #}
-		<nav class="navbar navbar-expand-lg bg-body-tertiary">
+		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="{{path('visitor_welcome_index')}}">JD</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,16 +59,16 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav">
 						<li class="nav-item">
-							<a class="nav-link active" aria-current="page" href="{{path('visitor_welcome_index')}}">Accueil</a>
+							<a class="nav-link {{ clientUri == path('visitor_welcome_index') ? 'jd-active' : '' }}" {{ clientUri == path('visitor_welcome_index') ? 'aria-current="page"' : '' }} href="{{path('visitor_welcome_index')}}">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Qui suis-je?</a>
+							<a class="nav-link" href="{{path('visitor_welcome_index')}}#about-me-section">Qui suis-je?</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('visitor_blog_index')}}">Blog</a>
+							<a class="nav-link {{ clientUri == path('visitor_blog_index') ? 'jd-active' : '' }}" href="{{path('visitor_blog_index')}}" {{ clientUri == path('visitor_blog_index') ? 'aria-current="page"' : '' }}>Blog</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{path('visitor_contact_create')}}">Contact</a>
+							<a class="nav-link {{ clientUri == path('visitor_contact_create') ? 'jd-active' : '' }}" href="{{path('visitor_contact_create')}}" {{ clientUri == path('visitor_contact_create') ? 'aria-current="page"' : '' }} href="{{path('visitor_contact_create')}}">Contact</a>
 						</li>
 					</ul>
                     <ul class="navbar-nav ms-auto">
@@ -89,10 +90,10 @@
 							</li>
 						{% else %}
 							<li class="nav-item">
-								<a class="nav-link" href="{{path('visitor_authentication_login')}}">Connexion</a>
+								<a class="my-2 mx-lg-2  btn btn-outline-primary shadow" href="{{path('visitor_authentication_login')}}">Connexion</a>
 							</li>
 							<li class="nav-item">
-								<a class="btn btn-primary" href="{{path('visitor_registration_register')}}">Inscription</a>
+								<a class="my-2 mx-lg-2 btn btn-primary shadow" href="{{path('visitor_registration_register')}}">Inscription</a>
 							</li>
 						{% endif %}
 						
@@ -105,9 +106,29 @@
 		{% block main %}{% endblock %}
 
 		{# Le pieds de page #}
-        <footer class="text-center">
-            <p>dwwm</p>
-        </footer>
+		<footer class="bg-primary text-white text-center py-2">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4">
+						<p class="fs-5">Jean Dupont</p>
+						<hr>
+						<p class="cursor-pointer"><a href="{{path('visitor_welcome_index')}}#about-me-section" class="text-decoration-none text-white">Qui suis-je ?</a></p>
+						<p class="cursor-pointer"><a href="{{path('visitor_contact_create')}}" class="text-decoration-none text-white">Contactez-moi</a></p>
+					</div>
+					<div class="col-md-4">
+						<p class="fs-5">Le blog</p>
+						<hr>
+						<p class="cursor-pointer"><a href="{{path('visitor_welcome_index')}}#last-posts" class="text-decoration-none text-white">Mes 3 derniers articles</a></p>
+						<p class="cursor-pointer"><a href="{{path('visitor_blog_index')}}" class="text-decoration-none text-white">Tous mes articles</a></p>
+					</div>
+					<div class="col-md-4">
+						<p class="fs-5">DWWM</p>
+						<hr>
+						<p class="cursor-pointer"><a href="#" class="text-decoration-none text-white">Les conditions générales d'utilisation</a></p>
+					</div>
+				</div>
+			</div>
+		</footer>
 
 	</body>
 </html>
