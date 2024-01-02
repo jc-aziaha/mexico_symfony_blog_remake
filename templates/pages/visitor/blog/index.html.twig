@@ -6,6 +6,74 @@
 
 {% block main %}
     <main>
-        <h1 class="text-center my-3 display-5">Liste des articles</h1>
+        {# Header component #}
+        {% include 'components/visitor/header.html.twig' with {'h1': "Liste des articles"} %}
+
+        <div class="container">
+            <div class="row text-center my-5">
+                <div class="col-md-6">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Les catégories
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if categories is not empty %}
+                                {% for category in categories %}
+                                    <li><a class="dropdown-item" href="{{path('visitor_blog_posts_filter_by_category', {'id':category.id, 'slug':category.slug})}}">{{category.name}} ({{category.getPublishedPosts|length}})</a></li>
+                                {% endfor %}
+                            {% else %}
+                                <li><a class="dropdown-item" href="#">Aucune catégorie disponible</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Les tags
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% if tags is not empty %}
+                                {% for tag in tags %}
+                                    <li><a class="dropdown-item" href="{{path('visitor_blog_posts_filter_by_tag', {'id':tag.id, 'slug':tag.slug})}}">{{tag.name}} ({{tag.getPublishedPosts|length}})</a></li>
+                                {% endfor %}
+                            {% else %}
+                                <li><a class="dropdown-item" href="#">Aucun tag disponible</a></li>
+                            {% endif %}
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        {% for post in posts %}
+                            <div class="card mb-3 shadow">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                    <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('visitor_post_thumb') }}" class="img-fluid rounded-start" alt="{{ post.title }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h2 class="card-title">{{post.title}}</h2>
+                                        <p class="card-text">{{post.description}}</p>
+                                        <p class="card-text"><small class="text-body-secondary">{{post.publishedAt|ago}}</small></p>
+                                        <p class="card-text"><a href="" class="btn btn-sm btn-primary">Lire l'article</a></p>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="my-3">
+                        {% endfor %}
+                        <div class="d-flex justify-content-end align-items-center">
+                            {# display navigation #}
+                            {{ knp_pagination_render(posts) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 {% endblock %}
