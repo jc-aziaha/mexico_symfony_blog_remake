@@ -5,6 +5,80 @@
 {% block description %}Accueil{% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Espace {{app.user.firstName}} {{app.user.lastName}}</h1>
+    <h1 class="text-center my-3 display-5">Hello {{app.user.firstName}} {{app.user.lastName}}</h1>
 
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_category_index')}}">
+                        <div class="card-header">Les catégories</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{categories|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_post_index')}}">
+                        <div class="card-header">Les articles</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{posts|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_tag_index')}}">
+                        <div class="card-header">Les tags</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{tags|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_comment_index')}}">
+                        <div class="card-header">Les commentaires</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{comments|length}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_user_index')}}">
+                        <div class="card-header">Les utilisateurs</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{users|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <a class="text-decoration-none text-dark" href="{{path('admin_contact_index')}}">
+                        <div class="card-header">Les contacts</div>
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{contacts|length}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center align-items-center my-3">
+                <div class="card text-bg-light my-3 w-100 h-100">
+                    <div class="card-header">Les likes</div>
+                    <div class="card-body">
+                        <p class="card-text">{{likes|length}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

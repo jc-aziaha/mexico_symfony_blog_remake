@@ -19,6 +19,7 @@
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/fr-FR.json'
                 },
+                "order": [ 8, 'desc' ],
             });
         } );
     </script>
@@ -61,7 +62,7 @@
                             
                         </td>
                         <td>{{post.title}}</td>
-                        <td>{{post.description}}</td>
+                        <td>{{post.description|u.truncate('30', '...')}}</td>
                         <td>{{post.category.name}}</td>
                         <td class="text-center">
                             {% if post.tags is empty %}
