@@ -26,12 +26,17 @@
             <div class="jd-post-container my-5">
                 {{post.content|raw}}
 
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{path('visitor_blog_index')}}">Liste des articles</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{post.description|u.truncate('90', '...')}}</li>
-                    </ol>
-                </nav>
+                <div class="my-4">
+                    <a id="like-link" href="{{path('visitor_blog_post_like', {'id': post.id, 'slug': post.slug})}}" class="text-decoration-none">
+                        {% if app.user and post.isLikedBy(app.user) %}
+                            <i class="fa-solid fa-thumbs-up"></i>  {# Pouce liké #}
+                        {% else %}
+                            <i class="fa-regular fa-thumbs-up"></i> {# Pouce non liké #}
+                        {% endif %}
+                        <span id="total-likes-container">{{post.likes|length}}</span>
+                        <span>J'aime</span>
+                    </a> 
+                </div>
 
                 {% if app.user %}
                     <div class="my-5" id="comment-div">
@@ -50,7 +55,6 @@
                     <p class="text-center my-5"><strong>Veuillez vous <a href="{{path('visitor_authentication_login')}}" class="btn btn-outline-primary">connecter</a> ou vous <a href="{{path('visitor_registration_register')}}" class="btn btn-primary">inscrire</a> avant de laisser un commentaire.</strong></p>
                 {% endif %}
                 
-
                 <div class="my-5">
                     {% if post.comments|length > 0 %}
                         {% for comment in post.comments|reverse %}
@@ -66,10 +70,41 @@
                     {% endif %}
                     
                 </div>
-
-
             </div>
-
         </div>
     </main>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function(){
+            $('#like-link').on('click', function(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: this.href,
+                    type: 'GET',
+                    success: function (response) {
+                        $('#total-likes-container').html(response.totalLikesUpdated);
+
+                        if ( $('i').hasClass('fa-regular') ) {
+                            $('i').removeClass('fa-regular');
+                            $('i').addClass('fa-solid');
+                        } else {
+                            $('i').removeClass('fa-solid');
+                            $('i').addClass('fa-regular');
+                        }
+                    },
+                    error: function (response) {
+                        if (response.status == 403) {
+                            alert(response.responseJSON.message);
+                        } else {
+                            alert("Une erreur est survenue, veuillez réessayer!");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
